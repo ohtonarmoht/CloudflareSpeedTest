@@ -1,0 +1,34 @@
+name: Upstream Sync
+
+permissions:
+    contents: write
+
+on:
+    schedule:
+        - cron: "0 */6 * * *"
+    workflow_dispatch:
+
+jobs:
+    sync_with_upstream:
+        name: Sync with Upstream
+        runs-on: ubuntu-latest
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+        steps:
+            - name: Checkout target repo
+              uses: actions/checkout@v3
+
+            - name: Sync Upstream
+              uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+              with:
+                  target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  upstream_sync_repo: XIU2/CloudflareSpeedTest
+                  upstream_sync_branch: main
+                  target_sync_branch: main
+                  test_mode: false
+
+            - name: Check for Failure
+              if: failure()
+              run: |
+                  echo "[Error] Upstream sync failed. Please check for conflicts or API rate limits."
+                  exit 1
