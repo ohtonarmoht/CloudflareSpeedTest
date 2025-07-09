@@ -15,7 +15,7 @@
 > _[**UserScript** - 🐵 Github 高速下载、知乎增强、自动无缝翻页、护眼模式 等十几个**油猴脚本**~](https://github.com/XIU2/UserScript) <img src="https://img.shields.io/github/stars/XIU2/UserScript.svg?style=flat-square&label=Star&color=4285dd&logo=github" height="16px" />_  
 > _[**SNIProxy** - 🧷 自用的简单 SNI Proxy（支持全平台、全系统、前置代理、配置简单等~](https://github.com/XIU2/SNIProxy) <img src="https://img.shields.io/github/stars/XIU2/SNIProxy.svg?style=flat-square&label=Star&color=4285dd&logo=github" height="16px" />_  
 
-> 本项目也支持对**其他 CDN / 网站 IP** 延迟测速（如：[CloudFront](https://github.com/XIU2/CloudflareSpeedTest/discussions/304)、[Gcore](https://github.com/XIU2/CloudflareSpeedTest/discussions/303) CDN），但下载测速需自行寻找地址
+当然了，本项目也支持对 **`其他 CDN / 多个解析 IP 的网站`** 延迟测速，但相对应的下载测速地址需自行寻找。
 
 > [!IMPORTANT]
 > Cloudflare CDN 已**明文禁止代理**方式使用，对于**代理套 CDN** 的自行承担风险，请勿过度依赖 [#382](https://github.com/XIU2/CloudflareSpeedTest/discussions/382) [#383](https://github.com/XIU2/CloudflareSpeedTest/discussions/383)
@@ -698,15 +698,15 @@ cfst.exe -f 1.txt
 常见的下载测速失败报错原因有（因为是原生报错信息，因此基本都是英文）：
 
 1. `... read: connection reset by peer ...  `  
-下载测速地址被阻断了，可能是蔷干的，也可能是运营商干的（比如移动或部分地区的白名单）
+**链接被重置**，可能是下载测速地址被阻断了，可能是蔷干的，也可能是运营商干的（比如移动或部分地区的白名单）
 2. `... HTTP 状态码: 403 ...`  
-像这种直接提示 HTTP 状态码的，比较好判断，如 403 就是测速地址禁止你访问，404 就是测速地址找不到文件，具体可以搜索 HTTP 状态码含义
+像这种直接提示 **HTTP 状态码**的，比较好判断，如 403 就是下载测速地址禁止你访问，404 就是下载测速地址路径对应的文件找不到，具体可以搜索 HTTP 状态码含义
 3. `... context deadline exceeded (Client.Timeout exceeded while awaiting headers) ...`  
-这种一般是超时引起的，可能是 IP 等网络问题，也可能是 -dt 下载测速时间设置的太短了，当然默认的 10 秒到不至于超时
-4. `...tls: handshake failure...` 或 `...tls: failed to verify certificate...`  
-这种 TLS 握手失败/TLS 证书错误 代表下载测速地址和测速 IP 服务器不匹配，也就是 下载测速地址 与 测速 IP 其中一方有误（例如下载测速地址是托管在 Fastly CDN 的，但测速 IP 是 Cloudflare CDN 的，或者反过来，总之就是 IP 服务器告诉你这个网站域名它不认识并把你拒之门外）
+这种一般是**请求超时**引起的，可能是 IP 或网络问题，也可能是 -dt 下载测速时间设置的太短了（当然默认的 10 秒肯定算不上短）
+4. `... tls: handshake failure ...` 或 `... tls: failed to verify certificate ...`  
+这种 **TLS 握手失败/TLS 证书错误** 代表下载测速地址和测速 IP 服务器不匹配，也就是下载测速地址与测速 IP 其中一方有误（例如下载测速地址是托管在 Fastly CDN 的，但测速 IP 是 Cloudflare CDN 的，或者反过来，总之就是你访问下载测速地址时该测速的 IP 服务器告诉你这个网站域名它不认识并把你拒之门外）
 
-> 如果你遇到了其他报错原因，且翻译后还是不懂，可以发 Issues 或 Discussions 询问。
+> 如果你遇到了其他报错原因，且翻译后还是不懂，可以发 Issues 或 Discussions 询问，我也会更新到这里。
 
 根据上面的报错原因排查一遍后，如果还是无法解决，那么可以尝试下面这些：
 
